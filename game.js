@@ -20,9 +20,14 @@ var sy = 0;
 
 var taskCtr = 0;
 
+var goopImage;
+var goopFrame = 0;
+var goopAnimTimer = 0;
+
 window.onload = function(){
     codeBox = document.getElementById("codeBoxID");
     canvas = document.getElementById("canvasID");
+    goopImage = document.getElementById("goopImgID");
     codeButtonDiv = document.getElementById("codeButtonDivID");
     buttonDiv = document.getElementById("buttonDiv");
     buttonDiv.innerHTML += "<br><br><br><button onclick='undoLastCommand()'>Undo</button><br>";
@@ -80,18 +85,52 @@ window.onload = function(){
         drawMaze(canvas, g, currentLevel.maze);
         
         gfx.fillStyle = "red";
-        gfx.beginPath();
+        // gfx.beginPath();
         let cw = cnvs.width / currentLevel.maze.width;
         let ch = cnvs.height / currentLevel.maze.height;
-        let ps = ch > cw ? cw : ch;
-        gfx.arc(sx, sy, ps / 3, 0, 2 * Math.PI);
-        gfx.fill();
+        // let ps = ch > cw ? cw : ch;
+        // gfx.arc(sx, sy, ps / 3, 0, 2 * Math.PI);
+        // gfx.fill();
+        switch(goopFrame){
+            case 0:{
+                gfx.drawImage(goopImage, 0, 0, 32, 32, sx, sy, cw, ch);
+                break;
+            }
+            case 1:{
+                gfx.drawImage(goopImage, 32, 0, 32, 32, sx, sy, cw, ch);
+                break;
+            }
+            case 2:{
+                gfx.drawImage(goopImage, 0, 32, 32, 32, sx, sy, cw, ch);
+                break;
+            }
+            case 3:{
+                gfx.drawImage(goopImage, 32, 32, 32, 32, sx, sy, cw, ch);
+                break;
+            }
+        }
         gfx.stroke();
     };
 
     codeBox.innerHTML = currentLevel.startCode;
 
+    setInterval(function(){
+        idleAnimation();
+    }, 100);
+
     resizeWindow();
+}
+
+function idleAnimation(){
+    let d = new Date();
+    if(d.getTime() - goopAnimTimer >= 100){
+        goopFrame++;
+        if(goopFrame > 3){
+            goopFrame = 0;
+        }
+        goopAnimTimer = d.getTime();
+        currentLevel.draw(canvas, g);
+    }
 }
 
 function movePlayer(dir){
@@ -183,8 +222,8 @@ function resizeWindow(){
 
     let cw = canvas.width / currentLevel.maze.width;
     let ch = canvas.height / currentLevel.maze.height;
-    sx = (currentLevel.px * cw) + (cw / 2);
-    sy = (currentLevel.py * ch) + (ch / 2);
+    sx = (currentLevel.px * cw);
+    sy = (currentLevel.py * ch);
 
     drawWindow();
 }
