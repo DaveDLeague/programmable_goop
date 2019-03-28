@@ -190,4 +190,5 @@ function drawMaze(canvas, gfx, maze){
     gfx.arc((maze.endCell.x * cw) + (cw / 2), (maze.endCell.y * ch) + (ch / 2), ps / 3, 0, 2 * Math.PI);
     gfx.fill();
     gfx.stroke();
+    gfx.closePath();
 }

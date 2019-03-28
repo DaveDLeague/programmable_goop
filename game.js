@@ -85,12 +85,8 @@ window.onload = function(){
         drawMaze(canvas, g, currentLevel.maze);
         
         gfx.fillStyle = "red";
-        // gfx.beginPath();
         let cw = cnvs.width / currentLevel.maze.width;
         let ch = cnvs.height / currentLevel.maze.height;
-        // let ps = ch > cw ? cw : ch;
-        // gfx.arc(sx, sy, ps / 3, 0, 2 * Math.PI);
-        // gfx.fill();
         switch(goopFrame){
             case 0:{
                 gfx.drawImage(goopImage, 0, 0, 32, 32, sx, sy, cw, ch);
@@ -109,7 +105,6 @@ window.onload = function(){
                 break;
             }
         }
-        gfx.stroke();
     };
 
     codeBox.innerHTML = currentLevel.startCode;
