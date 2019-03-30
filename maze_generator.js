@@ -34,7 +34,7 @@ class Maze {
             this.cells[i] = [];
             for(let j = 0; j < h; j++){
                 this.cells[i][j] = new MazeCell(i, j);
-                this.cells[i][j].color = "#DDEEFF";
+                this.cells[i][j].color = generateRandomColorWithAlpha();
             }
         }
     }
@@ -159,6 +159,9 @@ function drawMaze(canvas, gfx, maze){
     let ch = canvas.height / maze.height;
     let ww = cw / 8;
     let wh = ch / 8;
+
+    gfx.fillStyle = "white";
+    gfx.fillRect(0, 0, canvas.width, canvas.height);
     for(let i = 0; i < maze.width; i++){
         for(let j = 0; j < maze.height; j++){
             let cx = i * cw;
@@ -190,4 +193,5 @@ function drawMaze(canvas, gfx, maze){
     gfx.arc((maze.endCell.x * cw) + (cw / 2), (maze.endCell.y * ch) + (ch / 2), ps / 3, 0, 2 * Math.PI);
     gfx.fill();
     gfx.stroke();
+    gfx.closePath();
 }
